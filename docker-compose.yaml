@@ -13,11 +13,11 @@ services:
     volumes:
       - ./data-volume:/foo
   prism:
-    image: stoplight/prism # latest
+    image: stoplight/prism:3.2.9 # upper versions have savage (and several) bugs. i'm not joking.
     container_name: prism-mock
     init: true
     command: mock -d -h 0.0.0.0 "/tmp/openapi.yaml"
-    restart: on-failure
+    restart: on-failure # incredibly unreliable
     ports:
       - 4010:4010
     volumes:
