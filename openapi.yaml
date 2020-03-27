@@ -1,0 +1,458 @@
+openapi: 3.0.3
+info:
+  title: Logging API
+  description: "*Logging API* for AOS subject"
+  license:
+    name: Creative Commons Zero v1.0 Universal
+    url: https://github.com/MaanuelMM/logging-api-aos/blob/master/LICENSE
+  version: 1.0.0
+  contact:
+    name: Manuel Martín Malagón
+    url: https://github.com/MaanuelMM
+    email: manuel.martin.malagon@alumnos.upm.es
+servers:
+  - url: "{schema}://{servername}:{port}"
+    description: "[AOS] Logging API microservice mock server"
+    variables:
+      schema:
+        enum:
+          - http
+          - https
+        default: http
+      servername:
+        default: localhost
+      port:
+        default: "80"
+tags:
+  - name: Events
+    description: "Endpoints to manipulate software events"
+paths:
+  /events:
+    options:
+      operationId: api_event_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      responses:
+        "204":
+          description: Successfully requested
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_event_cget
+      tags: [Events]
+      summary: Events list
+      description: Get events list
+      responses:
+        "200":
+          description: JSON array with all known teams
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+    post:
+      operationId: api_event_post
+      tags: [Events]
+      summary: Event save
+      description: Save event
+      requestBody:
+        $ref: "#/components/requestBodies/EventRequestBody"
+      responses:
+        "201":
+          description: Successfully created
+        "404":
+          $ref: "#/components/responses/404"
+        "422":
+          $ref: "#/components/responses/422"
+  /events/{eventId}:
+    options:
+      operationId: api_event_id_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/eventId"
+      responses:
+        "200":
+          description: List of all possible request methods in events path
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_team_id_get
+      tags: [Events]
+      summary: Team information given an ID
+      description: Get event information from the given ID
+      parameters:
+        - $ref: "#/components/parameters/eventId"
+      responses:
+        "200":
+          description: JSON team information (from ID)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+  /events/searchByOrigin/{origin}:
+    options:
+      operationId: api_event_origin_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/origin"
+      responses:
+        "200":
+          description: List of all possible request methods in events path
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_team_origin_get
+      tags: [Events]
+      summary: Team information given a origin
+      description: Get event information from the given origin
+      parameters:
+        - $ref: "#/components/parameters/origin"
+      responses:
+        "200":
+          description: JSON array or CSV text string with all known teams (from origin)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+            text/csv:
+              schema:
+                type: string
+              example: >
+                eventId,origin,date,message,level,_parent_href_link,_self_href_link
+                89776253,"ORDERS","2020-03-08T18:30:55.855Z","Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478","info","/events","/events/89776253"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+  /events/searchByDate/{dateFrom}/{dateTo}:
+    options:
+      operationId: api_event_date_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/dateFrom"
+        - $ref: "#/components/parameters/dateTo"
+      responses:
+        "200":
+          description: List of all possible request methods in events path
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_team_date_get
+      tags: [Events]
+      summary: Team information given a date
+      description: Get event information from the given date
+      parameters:
+        - $ref: "#/components/parameters/dateFrom"
+        - $ref: "#/components/parameters/dateTo"
+      responses:
+        "200":
+          description: JSON array with all known teams (from date range)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+  /events/searchByText/{text}:
+    options:
+      operationId: api_event_text_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/text"
+      responses:
+        "200":
+          description: List of all possible request methods in events path
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_team_text_get
+      tags: [Events]
+      summary: Team information given a text
+      description: Get event information from the given text
+      parameters:
+        - $ref: "#/components/parameters/text"
+      responses:
+        "200":
+          description: JSON array with all known teams (from text matching)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+  /events/searchByLevel/{level}:
+    options:
+      operationId: api_event_level_options
+      tags: [Events]
+      summary: Possible request methods with events path
+      description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/level"
+      responses:
+        "200":
+          description: List of all possible request methods in events path
+          headers:
+            Allow:
+              $ref: "#/components/headers/Allow"
+    get:
+      operationId: api_team_level_get
+      tags: [Events]
+      summary: Team information given a level
+      description: Get event information from the given level
+      parameters:
+        - $ref: "#/components/parameters/level"
+      responses:
+        "200":
+          description: JSON array with all known teams (from level matching)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Event"
+          headers:
+            Etag:
+              $ref: "#/components/headers/Etag"
+        "404":
+          $ref: "#/components/responses/404"
+components:
+  schemas:
+    Event:
+      title: Event
+      type: object
+      properties:
+        event:
+          type: object
+          properties:
+            eventId:
+              type: integer
+              format: int64
+              example: 878923748
+              minimum: 1
+            origin:
+              type: string
+              example: "ORDERS"
+            date:
+              type: string
+              format: "date-time"
+            message:
+              type: string
+            level:
+              type: string
+              enum:
+                - "info"
+                - "warn"
+                - "error"
+            _links:
+              type: object
+              description: link relations
+              properties:
+                parent:
+                  type: object
+                  properties: { "href": { "type": "string", "format": "url" } }
+                self:
+                  type: object
+                  properties: { "href": { "type": "string", "format": "url" } }
+      x-examples:
+        example-1:
+          eventId: 89776253
+          origin: "ORDERS"
+          date: "2020-03-08T18:30:55.855Z"
+          message: "Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478"
+          level: "info"
+          _links:
+            parent:
+              href: /events
+            self:
+              href: /events/89776253
+    Message:
+      type: object
+      description: "`HTTP` response presentation"
+      properties:
+        code:
+          description: HTTP status code
+          type: integer
+          format: int64
+        message:
+          description: HTTP message
+          type: string
+  responses:
+    "404":
+      description: Event Not Found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+          examples:
+            "404":
+              $ref: "#/components/examples/404"
+    "422":
+      description: Event Fields Missing
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+          examples:
+            "422":
+              $ref: "#/components/examples/422"
+  examples:
+    "404":
+      value:
+        code: 404
+        message: Not Found
+    "422":
+      value:
+        code: 422
+        message: Unprocessable Entity
+  parameters:
+    eventId:
+      name: eventId
+      in: path
+      description: ID of the event
+      required: true
+      schema:
+        type: integer
+        format: int64
+    origin:
+      name: origin
+      in: path
+      description: Origin of the event
+      required: true
+      schema:
+        type: string
+    dateFrom:
+      name: dateFrom
+      in: path
+      description: Date of the event (from)
+      required: true
+      schema:
+        type: string
+        format: "date-time"
+    dateTo:
+      name: dateTo
+      in: path
+      description: Date of the event (to)
+      required: true
+      schema:
+        type: string
+        format: "date-time"
+    text:
+      name: text
+      in: path
+      description: Text of the event
+      required: true
+      schema:
+        type: string
+    level:
+      name: level
+      in: path
+      description: Level of the event
+      required: true
+      schema:
+        type: string
+        enum:
+          - "info"
+          - "warn"
+          - "error"
+  headers:
+    Etag:
+      description: |
+        The RFC7232 ETag header field in a response provides the current entity-
+        tag for the selected resource. An entity-tag is an opaque identifier for
+        different versions of a resource over time, regardless whether multiple
+        versions are valid at the same time. An entity-tag consists of an opaque
+        quoted string, possibly prefixed by a weakness indicator.
+      example: W/"xy", "5", "7da7a728-f910-11e6-942a-68f728c1ba70"
+      required: true
+      schema:
+        type: string
+    Allow:
+      description: |
+        All the possible request methods are returned in the header for self-
+        discovering robots and for developers too.
+      example: "OPTIONS, GET, HEAD, POST"
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    EventRequestBody:
+      description: "Data for generating an `event`"
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              origin:
+                type: string
+                example: "ORDERS"
+              date:
+                type: string
+                format: "date-time"
+              message:
+                type: string
+              level:
+                type: string
+                enum:
+                  - "info"
+                  - "warn"
+                  - "error"
+            x-examples:
+              example-1:
+                origin: "ORDERS"
+                date: "2020-03-08T18:30:55.855Z"
+                message: "Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478"
+                level: "info"
