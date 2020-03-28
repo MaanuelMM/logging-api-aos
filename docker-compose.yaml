@@ -13,7 +13,7 @@ services:
     volumes:
       - ./data-volume:/foo
   prism:
-    image: maanuel/prism # custom image to avoid two bugs in two different versions.
+    image: maanuelmm/prism # custom image to avoid two bugs in two different versions.
     container_name: prism-mock
     init: true
     command: mock -d -h 0.0.0.0 "/tmp/openapi.yaml"
