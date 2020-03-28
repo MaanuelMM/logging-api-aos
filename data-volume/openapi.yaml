@@ -333,7 +333,7 @@ components:
           type: string
   responses:
     "400":
-      description: Missing Body Request (Event Fields Missing)
+      description: Malformed Request Body
       content:
         application/json:
           schema:
@@ -351,7 +351,7 @@ components:
             "404":
               $ref: "#/components/examples/404"
     "422":
-      description: Content-Type Missings
+      description: Content-Type Missings (Event Fields Missing)
       content:
         application/json:
           schema:
