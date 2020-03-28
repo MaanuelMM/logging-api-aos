@@ -423,7 +423,7 @@ components:
       description: |
         All the possible request methods are returned in the header for self-
         discovering robots and for developers too.
-      example: "OPTIONS, GET, HEAD, POST"
+      example: "GET,DELETE,HEAD,PATCH,POST,PUT"
       required: true
       schema:
         type: string
