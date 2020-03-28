@@ -339,7 +339,7 @@ components:
           schema:
             $ref: "#/components/schemas/Message"
           examples:
-            "404":
+            "400":
               $ref: "#/components/examples/400"
     "404":
       description: Event Not Found
