@@ -330,6 +330,15 @@ components:
           description: HTTP message
           type: string
   responses:
+    "400":
+      description: Missing Body Request (Event Fields Missing)
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Message"
+          examples:
+            "404":
+              $ref: "#/components/examples/400"
     "404":
       description: Event Not Found
       content:
@@ -340,7 +349,7 @@ components:
             "404":
               $ref: "#/components/examples/404"
     "422":
-      description: Event Fields Missing
+      description: Content-Type Missings
       content:
         application/json:
           schema:
@@ -349,6 +358,10 @@ components:
             "422":
               $ref: "#/components/examples/422"
   examples:
+    "400":
+      value:
+        code: 400
+        message: Bad Request
     "404":
       value:
         code: 404
