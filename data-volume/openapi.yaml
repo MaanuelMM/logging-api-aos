@@ -351,7 +351,7 @@ components:
             "404":
               $ref: "#/components/examples/404"
     "422":
-      description: Content-Type Missings (Event Fields Missing)
+      description: Content-Type Missing (Event Fields Missing)
       content:
         application/json:
           schema:
