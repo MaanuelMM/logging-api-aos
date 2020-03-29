@@ -307,10 +307,17 @@ components:
               properties:
                 parent:
                   type: object
-                  properties: { "href": { "type": "string", "format": "url" } }
+                  properties:
+                    href:
+                      type: string
+                      format: url
+                      x-faker: internet.url
                 self:
-                  type: object
-                  properties: { "href": { "type": "string", "format": "url" } }
+                  properties:
+                    href:
+                      type: string
+                      format: url
+                      x-faker: internet.url
       x-examples:
         example-1:
           eventId: 89776253
