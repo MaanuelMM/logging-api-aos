@@ -147,7 +147,7 @@ Cabe destacar que este último tiene errores en sus distitas versiones, por lo q
 
 ##### Requisitos
 
-* **Docker Engine** ``18.06.0`` o superior (asegúrate de que el servicio se encuentra arrancado).
+* **Docker Engine** ``18.06.0`` o superior (asegúrate de que el servicio se encuentre arrancado).
 
 ##### Arrancando el microservicio
 
