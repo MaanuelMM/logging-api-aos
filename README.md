@@ -154,7 +154,7 @@ Cabe destacar que este último tiene errores en sus distitas versiones, por lo q
 Abre una terminal (con privilegios administrador si el pipeline de Docker no tiene dichos permisos asignados) y sitúate en el directorio raíz de este proyecto. A continuación, ejecuta el siguiente comando para levantar los microservicios:
 
 ```console
-docker-compose -f docker-compose.yaml up
+foo@bar:~$ docker-compose -f docker-compose.yaml up
 ```
 
 Si este falla, asegúrate de no tener arrancado ningún contenedor Docker que tenga el mismo nombre, así como de no usar el mismo puerto (si fuese necesario, cambie el puerto en el fichero ``docker-compose.yaml``).
@@ -172,7 +172,7 @@ Una vez finalice la manipulación del microservicio, podrá finalizar la ejecuci
 También deberá eliminar los contenedores creados para evitar futuros problemas, pues el servidor _Prism_ requiere de su eliminación si se desea volver a lanzar el contenedor ya que de lo contrario no funcionará, ejecutando el siguiente comando:
 
 ```console
-docker-compose -f docker-compose.yaml rm
+foo@bar:~$ docker-compose -f docker-compose.yaml rm
 ```
 
 Estos pasos también deberán de ser realizados si por algún casual el servicio falla mientras se ejecuta y necesita ser reiniciado, parando y eliminando primero los contenedores creados y volviéndolos a lanzar de nuevo para su correcta ejecucción.
