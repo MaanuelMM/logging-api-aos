@@ -11,7 +11,7 @@ services:
     ports:
       - 80:8080
     volumes:
-      - ./data-volume:/foo
+      - ./specification:/foo
   prism:
     image: maanuelmm/prism # custom image to avoid two bugs in two different versions.
     container_name: prism-mock
@@ -21,4 +21,4 @@ services:
     ports:
       - 4010:4010
     volumes:
-      - ./data-volume:/tmp
+      - ./specification:/tmp
