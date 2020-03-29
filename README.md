@@ -171,7 +171,7 @@ Una vez ahí, podrá probar, tal y como le indica la interfaz de usuario de Swag
 
 Una vez finalice la manipulación del microservicio, podrá finalizar la ejecución del mismo con ``Ctrl + C``.
 
-También deberá eliminar los contenedores creados para evitar futuros problemas, pues el servidor _Prism_ requiere de su eliminación si se desea volver a lanzar el contenedor ya que de lo contrario no funcionará, ejecutando el siguiente comando:
+También deberá eliminar los contenedores creados para evitar futuros problemas, pues el servidor _Prism_ requiere de su eliminación si se desea volver a lanzar el contenedor ya que de lo contrario no funcionará. Para ello deberá ejecutar el siguiente comando:
 
 ```console
 foo@bar:~$ docker-compose -f docker-compose.yaml rm
