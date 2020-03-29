@@ -146,6 +146,7 @@ paths:
             text/csv:
               schema:
                 type: string
+                x-faker: lorem.paragraphs
               example: >
                 eventId,origin,date,message,level,_parent_href_link,_self_href_link
                 89776253,"ORDERS","2020-03-08T18:30:55.855Z","Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478","info","/events","/events/89776253"
