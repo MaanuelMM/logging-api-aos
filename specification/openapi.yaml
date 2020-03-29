@@ -282,16 +282,19 @@ components:
             eventId:
               type: integer
               format: int64
+              x-faker: finance.amount # because of positives numbers
               example: 878923748
               minimum: 1
             origin:
               type: string
+              x-faker: name.jobArea # recreating a multipurpose logger
               example: "ORDERS"
-            date:
+            date: # not necessary
               type: string
               format: "date-time"
             message:
               type: string
+              x-faker: hacker.phrase # just for fun hahaha
             level:
               type: string
               enum:
