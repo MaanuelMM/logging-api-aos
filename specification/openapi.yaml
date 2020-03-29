@@ -482,3 +482,10 @@ components:
                 date: "2020-03-08T18:30:55.855Z"
                 message: "Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478"
                 level: "info"
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - ApiKeyAuth: [] # applied globally

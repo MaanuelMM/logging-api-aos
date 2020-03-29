@@ -143,6 +143,8 @@ Para la interacción con la especificación del microservicio, se hará uso de `
 
 Cabe destacar que este último tiene errores en sus distitas versiones, por lo que he realizado un [``fork``](https://github.com/MaanuelMM/prism) de la versión _3.2.9_ aplicando uno de los parches de la versión _3.3.1_ para manejar las peticiones ``OPTIONS`` con la cabecera ``CORS``.
 
+Además, cuenta con un mecanismo de seguridad mediante una ``X-API-Key`` en la cabecera, con el fin de garantizar la seguridad de acceso y manipulación de los datos de la API.
+
 #### Ejecución del microservicio
 
 ##### Requisitos
