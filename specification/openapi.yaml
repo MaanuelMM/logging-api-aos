@@ -33,6 +33,12 @@ paths:
       tags: [Events]
       summary: Possible request methods with events path
       description: Get possible request methods with events path
+      parameters:
+        - $ref: "#/components/parameters/origin"
+        - $ref: "#/components/parameters/dateFrom"
+        - $ref: "#/components/parameters/dateTo"
+        - $ref: "#/components/parameters/text"
+        - $ref: "#/components/parameters/level"
       responses:
         "204":
           description: Successfully requested
@@ -46,9 +52,15 @@ paths:
       tags: [Events]
       summary: Events list
       description: Get events list
+      parameters:
+        - $ref: "#/components/parameters/origin"
+        - $ref: "#/components/parameters/dateFrom"
+        - $ref: "#/components/parameters/dateTo"
+        - $ref: "#/components/parameters/text"
+        - $ref: "#/components/parameters/level"
       responses:
         "200":
-          description: JSON array with all known teams
+          description: JSON array or CSV text string with all known teams
           content:
             application/json:
               schema:
@@ -58,6 +70,13 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Event"
+            text/csv:
+              schema:
+                type: string
+                x-faker: lorem.paragraphs
+              example: >
+                eventId,origin,date,message,level,_parent_href_link,_self_href_link
+                89776253,"ORDERS","2020-03-08T18:30:55.855Z","Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478","info","/events","/events/89776253"
           headers:
             Etag:
               $ref: "#/components/headers/Etag"
@@ -113,183 +132,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Event"
-          headers:
-            Etag:
-              $ref: "#/components/headers/Etag"
-        "401":
-          $ref: "#/components/responses/401"
-        "404":
-          $ref: "#/components/responses/404"
-  /events/searchByOrigin/{origin}:
-    options:
-      operationId: api_event_origin_options
-      tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
-      parameters:
-        - $ref: "#/components/parameters/origin"
-      responses:
-        "200":
-          description: List of all possible request methods in events path
-          headers:
-            Allow:
-              $ref: "#/components/headers/Allow"
-        "401":
-          $ref: "#/components/responses/401"
-    get:
-      operationId: api_team_origin_get
-      tags: [Events]
-      summary: Team information given a origin
-      description: Get event information from the given origin
-      parameters:
-        - $ref: "#/components/parameters/origin"
-      responses:
-        "200":
-          description: JSON array or CSV text string with all known teams (from origin)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  events:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Event"
-            text/csv:
-              schema:
-                type: string
-                x-faker: lorem.paragraphs
-              example: >
-                eventId,origin,date,message,level,_parent_href_link,_self_href_link
-                89776253,"ORDERS","2020-03-08T18:30:55.855Z","Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478","info","/events","/events/89776253"
-          headers:
-            Etag:
-              $ref: "#/components/headers/Etag"
-        "401":
-          $ref: "#/components/responses/401"
-        "404":
-          $ref: "#/components/responses/404"
-  /events/searchByDate/{dateFrom}/{dateTo}:
-    options:
-      operationId: api_event_date_options
-      tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
-      parameters:
-        - $ref: "#/components/parameters/dateFrom"
-        - $ref: "#/components/parameters/dateTo"
-      responses:
-        "200":
-          description: List of all possible request methods in events path
-          headers:
-            Allow:
-              $ref: "#/components/headers/Allow"
-        "401":
-          $ref: "#/components/responses/401"
-    get:
-      operationId: api_team_date_get
-      tags: [Events]
-      summary: Team information given a date
-      description: Get event information from the given date
-      parameters:
-        - $ref: "#/components/parameters/dateFrom"
-        - $ref: "#/components/parameters/dateTo"
-      responses:
-        "200":
-          description: JSON array with all known teams (from date range)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  events:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Event"
-          headers:
-            Etag:
-              $ref: "#/components/headers/Etag"
-        "401":
-          $ref: "#/components/responses/401"
-        "404":
-          $ref: "#/components/responses/404"
-  /events/searchByText/{text}:
-    options:
-      operationId: api_event_text_options
-      tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
-      parameters:
-        - $ref: "#/components/parameters/text"
-      responses:
-        "200":
-          description: List of all possible request methods in events path
-          headers:
-            Allow:
-              $ref: "#/components/headers/Allow"
-        "401":
-          $ref: "#/components/responses/401"
-    get:
-      operationId: api_team_text_get
-      tags: [Events]
-      summary: Team information given a text
-      description: Get event information from the given text
-      parameters:
-        - $ref: "#/components/parameters/text"
-      responses:
-        "200":
-          description: JSON array with all known teams (from text matching)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  events:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Event"
-          headers:
-            Etag:
-              $ref: "#/components/headers/Etag"
-        "401":
-          $ref: "#/components/responses/401"
-        "404":
-          $ref: "#/components/responses/404"
-  /events/searchByLevel/{level}:
-    options:
-      operationId: api_event_level_options
-      tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
-      parameters:
-        - $ref: "#/components/parameters/level"
-      responses:
-        "200":
-          description: List of all possible request methods in events path
-          headers:
-            Allow:
-              $ref: "#/components/headers/Allow"
-        "401":
-          $ref: "#/components/responses/401"
-    get:
-      operationId: api_team_level_get
-      tags: [Events]
-      summary: Team information given a level
-      description: Get event information from the given level
-      parameters:
-        - $ref: "#/components/parameters/level"
-      responses:
-        "200":
-          description: JSON array with all known teams (from level matching)
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  events:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Event"
           headers:
             Etag:
               $ref: "#/components/headers/Etag"
@@ -433,39 +275,34 @@ components:
         format: int64
     origin:
       name: origin
-      in: path
+      in: query
       description: Origin of the event
-      required: true
       schema:
         type: string
     dateFrom:
       name: dateFrom
-      in: path
+      in: query
       description: Date of the event (from)
-      required: true
       schema:
         type: string
         format: "date-time"
     dateTo:
       name: dateTo
-      in: path
+      in: query
       description: Date of the event (to)
-      required: true
       schema:
         type: string
         format: "date-time"
     text:
       name: text
-      in: path
+      in: query
       description: Text of the event
-      required: true
       schema:
         type: string
     level:
       name: level
-      in: path
+      in: query
       description: Level of the event
-      required: true
       schema:
         type: string
         enum:
