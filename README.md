@@ -1,62 +1,64 @@
-# API de Registro de Eventos (logging) para la asignatura de AOS
+# Logging API for AOS subject
 
-## Objetivo
+[Leer en español](./README.es-ES.md)
 
-El principal objetivo de esta tarea consiste en consolidar los conceptos relacionados con la especificación de un servicio. Para ello se definirá y publicará la definición de un servicio empleando el estándar [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3). Adicionalmente se simulará el comportamiento del servicio (se propone el empleo de [Stoplight Prism](https://stoplight.io/open-source/prism/), [Postman](https://www.postman.com/), ...)
+# Goal
 
-## Enunciado
+The main goal of this task is to consolidate the concepts related to the specification of a service. For this purpose, the definition of a service will be defined and published using the [OpenAPI 3](http://spec.openapis.org/oas/v3.0.3) standard. Additionally, the behaviour of the service will be simulated (the use of [Stoplight Prism](https://stoplight.io/open-source/prism/), [Postman](https://www.postman.com/), ... is proposed).
 
-Para conseguir este objetivo se van a definir un conjunto de servicios que, posteriormente, se emplearán para desarrollar una aplicación de gestión de un almacén de productos. En primer lugar se formarán equipos de __como máximo__ tres alumnos, y cada equipo deberá realizar la especificación de uno de los servicios propuestos.
+# Statement
 
-Para publicar la especificación se deberá generar un contenedor docker que ofrezca la definición de las operaciones disponibles en el servicio y describa las conexiones con otros servicios. Los servicios y las diferentes funcionalidades que se deberán implementar deberán realizar las siguientes funcionalidades completas:
+To achieve this goal, a set of services will be defined and then used to develop a product warehouse management application. First, teams of __a maximum of__ three students will be formed, and each team will have to specify one of the proposed services.
 
-* **Gestión de Productos**
-    * Alta, baja y modificación de productos
-    * Alta, baja y modificación de categorías
-    * Búsqueda de productos con texto libre
-    * Listado de productos de una categoría
-    * Todas las operaciones son eventos a registrar
-* **Gestión de Pedidos**
-    * Alta, baja y modificación de pedidos
-    * Búsqueda de pedidos por tipo, estado, producto, organización (cliente o proveedor) y texto libre
-    * Consulta de stock de un producto (comprados y recibidos - vendidos y enviados o recibidos)
-    * Todas las operaciones son eventos a registrar
-* **Registro de Eventos (logging)** <span style="color:darkmagenta">_**[MICROSERVICIO REALIZADO]**_</span>
-    * Alta de eventos
-    * Búsqueda de eventos por origen, nivel, rango de fechas y texto libre
-    * Volcado en CSV de todos los eventos de un determinado origen
-    * Todas las operaciones son eventos a registrar
-* **Facturación**
-    * Alta, baja y modificación de organizaciones
-    * Alta y cancelación de facturas
-    * La modificación de una factura implica baja de la misma y creación de una nueva con los cambios
-    * Búsqueda de facturas por organización (cliente), rango de fecha, estado y texto libre
-    * Todas las operaciones son eventos a registrar
+In order to publish the specification, a docker container must be generated to provide the definition of the operations available in the service and describe the connections with other services. The services and the different functionalities that must be implemented must perform the following complete functionalities:
 
-## Esquemas
+* **Product Management**
+  * Adding, deleting and modifying products
+  * Adding, deleting and changing categories
+  * Product search with free text
+  * Listing of products in a category
+  * All operations are events to be recorded
+* **Order Management**
+  * Adding, deleting and modifying orders
+  * Order search by type, status, product, organization (customer or supplier) and free text
+  * Checking the stock of a product (bought and received - sold and sent or received)
+  * All operations are events to be recorded
+* **Event Logging** <span style="color:darkmagenta">_**[MICROSERVICE DEVELOPED]**_</span>
+  * Event registration
+  * Evenet search by origin, level, date range and free text
+  * CSV dumping of all events from a given source
+  * All operations are events to be recorded
+* **Billing**
+  * Adding, deleting and modifying organizations
+  * Registration and cancellation of invoices
+  * Changing an invoice means cancelling it and creating a new one with the changes
+  * Invoice search by organization (customer), date range, status and free text
+  * All operations are events to be recorded
 
-* [Producto](./docs/schemas/Producto.yaml)
-* [Categoría](./docs/schemas/Categoria.yaml)
-* [Pedido](./docs/schemas/Pedido.yaml)
-* [Evento](./docs/schemas/Evento.yaml)
-* [Organización](./docs/schemas/Organizacion.yaml) (proveedores, clientes, ...)
-* [Factura](./docs/schemas/Factura.yaml)
+# Schemas
 
-## Notas
+* [Product](./docs/schemas/Producto.yaml)
+* [Category](./docs/schemas/Categoria.yaml)
+* [Order](./docs/schemas/Pedido.yaml)
+* [Event](./docs/schemas/Evento.yaml)
+* [Organization](./docs/schemas/Organizacion.yaml) (proveedores, clientes, ...)
+* [Invoice](./docs/schemas/Factura.yaml)
 
-* En el diseño de cada servicio se tendrá en cuenta que cada uno de los servicios deberá contar con su propio mecanismo de persistencia
-* Se deberá enviar un único fichero comprimido en el que se adjuntarán todos los ficheros necesarios para desplegar el servicio asignado. Obligatoriamente se incluirá un Fichero ``README.md`` que contendrá las instrucciones necesarias para desplegar el proyecto desarrollado
-* Para realizar esta práctica se formarán grupos de 3 alumnos. Aquellos alumnos que opten por evaluación solo por prueba final realizarán el ejercicio de manera individual. En la plataforma se publicará el servicio asignado a cada alumno o grupo de alumnos.
+# Notes
 
-## Microservicio resultante
+* The design of each service will take into account that each service must have its own persistence mechanism
+* A single compressed file must be sent in which all the files necessary to deploy the assigned service are attached. A ``README.md`` file must be included, containing the necessary instructions to deploy the developed project
+* To carry out this practice, groups of 3 students will be formed. Those students who opt for evaluation by final test only will do the task individually. The service assigned to each student or group of students will be published on the platform.
 
-El microservicio realizado ha sido el de [logging](./docs/schemas/Evento.yaml), el cual se encuentra especificado en [este fichero](./specification/openapi.yaml).
+# The resulting microservice
 
-### Descripción del microservicio
+The microservice developed has been [logging](./docs/schemas/Evento.yaml), which is specificated in [this file](./specification/openapi.yaml).
 
-#### Esquema
+### Microservice description
 
-El esquema a seguir según el enunciado de la práctica es el siguiente:
+#### Schema
+
+The scheme to follow according to the practice statement is the following:
 
 ```yaml
 Evento:
@@ -111,7 +113,7 @@ Evento:
 
 #### Endpoints
 
-El microservicio cuenta con los siguientes endpoints:
+The microservice has the following endpoints:
 
 * **/events**
     * OPTIONS
@@ -133,48 +135,48 @@ El microservicio cuenta con los siguientes endpoints:
     * OPTIONS
     * GET _(application/json)_
 
-Además, se hace uso de la cabecera ``Etag`` para las respuestas de los ``GET`` y la cabecera ``Allow`` para las respuestas de los ``OPTIONS``.
+In addition, the ``ETag`` header is used for ``GET`` responses and the ``Allow`` header is used for ``OPTIONS`` responses.
 
-También cuenta con un mecanismo de seguridad mediante una ``X-API-Key`` en la cabecera, con el fin de garantizar la seguridad de acceso y manipulación de los datos de la API.
+It also has a security mechanism through an ``X-API-Key`` in the header, in order to guarantee the security of access and manipulation of the API data.
 
-Por último, al igual que todo servicio ``HTTP``, se devuelve un código de respuesta para cada petición realizada con el fin de saber si la petición se realizó correctamente o, en su defecto, un mensaje de error informando de lo sucedido.
+Finally, like all ``HTTP`` services, a response code is returned for each request made in order to know if the request was successful or, if not, an error message informing about what happened.
 
-### Interacción con el microservicio
+### Microservice interaction
 
-Para la interacción con la especificación del microservicio, se hará uso de ``Swagger UI``, una interfaz de usuario que permite la visualización y manipulación de servicios _OpenAPI_. Además, se empleará ``Prism``, un _mock server_ que nos permitirá recrear el funcionamiento del servicio sin necesidad de implementar este.
+For the interaction with the microservice specification, ``Swagger UI`` will be used, a user interface that allows the display and manipulation of _OpenAPI_ services. In addition, ``Prism`` will be used, a _mock server_ that will allow us to recreate the operation of the service without the need to implement it.
 
-Cabe destacar que este último tiene errores en sus distitas versiones, por lo que he realizado un [``fork``](https://github.com/MaanuelMM/prism) de la versión _3.2.9_ aplicando uno de los parches de la versión _3.3.1_ para manejar las peticiones ``OPTIONS`` con la cabecera ``CORS``.
+It should be noted that the latter has errors in its different versions, so I have made a [``fork``](https://github.com/MaanuelMM/prism) of version _3.2.9_ applying one of the patches of version _3.3.1_ to handle the ``OPTIONS`` requests with the ``CORS`` header.
 
-#### Ejecución del microservicio
+#### Running the microservice
 
-##### Requisitos
+##### Requirements
 
-* **Docker Engine** ``18.06.0`` o superior (asegúrate de que el servicio se encuentre arrancado).
+* **Docker Engine** ``18.06.0`` or higher (make sure the service is running).
 
-##### Arrancando el microservicio
+##### Starting the microservice
 
-Abre una terminal (con privilegios administrador si el pipeline de Docker no tiene dichos permisos asignados) y sitúate en el directorio raíz de este proyecto. A continuación, ejecuta el siguiente comando para levantar los microservicios:
+Open a terminal (with administrator privileges if the Docker pipeline does not have such permissions assigned) and go to the root directory of this project. Then run the following command to up the microservices:
 
 ```console
 foo@bar:~$ docker-compose -f docker-compose.yaml up
 ```
 
-Si este falla, asegúrate de no tener arrancado ningún contenedor Docker que tenga el mismo nombre, así como de no usar el mismo puerto (si fuese necesario, cambie el puerto en el fichero ``docker-compose.yaml``).
+If this fails, make sure you don't have any Docker containers with the same name running, and don't use the same port (if necessary, change the port in the ``docker-compose.yaml`` file).
 
-##### Usando el microservicio
+##### Using the microservice
 
-Abre el navegador y escribe ``localhost`` (si hubiese cambiado de puerto, escriba el puerto de la siguiente forma: ``localhost:<port>``).
+Open the browser and type ``localhost`` (if you have changed the port, type the port as follows: ``localhost:<port>``).
 
-Una vez ahí, podrá probar, tal y como le indica la interfaz de usuario de Swagger UI, cada una de las peticiones disponibles junto con los parámetros requeridos. También podrá ver los logs generados por consola para ver cómo se realizan las peticiones y cómo lo resuelve el _mock server_.
+Once there, you can test, as indicated by the Swagger UI user interface, each of the available requests along with the required parameters. You can also view the console-generated logs to see how the requests are made and how the _mock server_ resolves them.
 
-##### Finalizando el microservicio
+##### Stopping the microservice
 
-Una vez finalice la manipulación del microservicio, podrá finalizar la ejecución del mismo con ``Ctrl + C``.
+Once the manipulation of the microservice has been completed, you can end the execution of the microservice with ``Ctrl + C``.
 
-También deberá eliminar los contenedores creados para evitar futuros problemas, pues el servidor _Prism_ requiere de su eliminación si se desea volver a lanzar el contenedor (de lo contrario no funcionará). Para ello deberá ejecutar el siguiente comando:
+You should also remove the created containers to avoid future problems, as the _Prism_ server requires their removal if you want to re-launch the container (otherwise it will not work). To do this you must execute the following command:
 
 ```console
 foo@bar:~$ docker-compose -f docker-compose.yaml rm
 ```
 
-Estos pasos también deberán de ser realizados si por algún casual el servicio falla mientras se ejecuta y necesita ser reiniciado, parando y eliminando primero los contenedores creados y volviéndolos a lanzar de nuevo para su correcta ejecucción.
+These steps should also be performed if by any chance the service fails while running and needs to be restarted, stopping and removing the containers created first and launching them again for proper execution.
