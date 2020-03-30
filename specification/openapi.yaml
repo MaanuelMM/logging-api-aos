@@ -33,12 +33,6 @@ paths:
       tags: [Events]
       summary: Possible request methods with events path
       description: Get possible request methods with events path
-      parameters:
-        - $ref: "#/components/parameters/origin"
-        - $ref: "#/components/parameters/dateFrom"
-        - $ref: "#/components/parameters/dateTo"
-        - $ref: "#/components/parameters/text"
-        - $ref: "#/components/parameters/level"
       responses:
         "204":
           description: Successfully requested
