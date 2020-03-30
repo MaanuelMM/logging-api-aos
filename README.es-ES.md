@@ -122,16 +122,16 @@ El microservicio cuenta con los siguientes endpoints:
 * **/events/<span style="color:limegreen">{eventId}</span>**
     * OPTIONS
     * GET _(application/json)_
-* **/events/searchByOrigin/<span style="color:limegreen">{origin}</span>**
+* **/events/findByOrigin/<span style="color:limegreen">{origin}</span>**
     * OPTIONS
     * GET _(application/json | text/csv)_
-* **/events/searchByDate/<span style="color:limegreen">{dateFrom}</span>/<span style="color:limegreen">{dateTo}</span>**
+* **/events/findByDate/<span style="color:limegreen">{dateFrom}</span>/<span style="color:limegreen">{dateTo}</span>**
     * OPTIONS
     * GET _(application/json)_
-* **/events/searchByText/<span style="color:limegreen">{text}</span>**
+* **/events/findByText/<span style="color:limegreen">{text}</span>**
     * OPTIONS
     * GET _(application/json)_
-* **/events/searchByLevel/<span style="color:limegreen">{level}</span>**
+* **/events/findByLevel/<span style="color:limegreen">{level}</span>**
     * OPTIONS
     * GET _(application/json)_
 
