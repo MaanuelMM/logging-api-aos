@@ -121,7 +121,7 @@ The microservice has the following endpoints:
     * POST _(application/json)_
 * **/events/<span style="color:limegreen">{eventId}</span>**
     * OPTIONS
-    * GET _(application/json)_
+    * GET _(application/json | text/csv)_
 
 In addition, the ``ETag`` header is used for ``GET`` responses and the ``Allow`` header is used for ``OPTIONS`` responses.
 

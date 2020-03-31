@@ -121,7 +121,7 @@ El microservicio cuenta con los siguientes endpoints:
     * POST _(application/json)_
 * **/events/<span style="color:limegreen">{eventId}</span>**
     * OPTIONS
-    * GET _(application/json)_
+    * GET _(application/json | text/csv)_
 
 Además, se hace uso de la cabecera ``Etag`` para las respuestas de los ``GET`` y la cabecera ``Allow`` para las respuestas de los ``OPTIONS``.
 
