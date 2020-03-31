@@ -224,6 +224,10 @@ components:
             - "info"
             - "warn"
             - "error"
+          default: "info" # if there is no level, "info" is recorded
+      required: # if there is no date, current one is recorded
+        - origin
+        - message
       x-examples:
         example-1:
           origin: "ORDERS"
@@ -270,7 +274,7 @@ components:
             "404":
               $ref: "#/components/examples/404"
     "422":
-      description: Content-Type Missing (Event Fields Missing)
+      description: Content-Type Missing Or Event Fields Missing
       content:
         application/json:
           schema:
