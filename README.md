@@ -123,7 +123,7 @@ The microservice has the following endpoints:
     * OPTIONS
     * GET _(application/json | text/csv)_
 
-In addition, the ``ETag`` header is used for ``GET`` responses and the ``Allow`` header is used for ``OPTIONS`` responses.
+In addition, the ``ETag`` header is used for ``GET`` responses, the ``Allow`` header is used for ``OPTIONS`` responses and the ``Location`` header is used for ``POST`` responses.
 
 It also has a security mechanism through an ``X-API-Key`` in the header, in order to guarantee the security of access and manipulation of the API data.
 

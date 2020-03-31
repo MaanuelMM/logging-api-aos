@@ -123,7 +123,7 @@ El microservicio cuenta con los siguientes endpoints:
     * OPTIONS
     * GET _(application/json | text/csv)_
 
-Además, se hace uso de la cabecera ``Etag`` para las respuestas de los ``GET`` y la cabecera ``Allow`` para las respuestas de los ``OPTIONS``.
+Además, se hace uso de la cabecera ``Etag`` para las respuestas de los ``GET``, la cabecera ``Allow`` para las respuestas de los ``OPTIONS`` y la cabecera ``Location`` para las respuestas de los ``POST``.
 
 También cuenta con un mecanismo de seguridad mediante una ``X-API-Key`` en la cabecera, con el fin de garantizar la seguridad de acceso y manipulación de los datos de la API.
 
