@@ -117,7 +117,7 @@ The microservice has the following endpoints:
 
 * **/events**
     * OPTIONS
-    * GET _(application/json | text/csv)_
+    * GET _(application/json | text/csv)_<span style="color:orangered"> _[?query=search]_</span>
     * POST _(application/json)_
 * **/events/<span style="color:limegreen">{eventId}</span>**
     * OPTIONS
