@@ -31,11 +31,11 @@ paths:
     options:
       operationId: api_event_options
       tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
+      summary: Possible request methods with /events path
+      description: Get possible request methods with /events path
       responses:
         "204":
-          description: Successfully requested
+          description: List of all possible request methods in /events path
           headers:
             Allow:
               $ref: "#/components/headers/Allow"
@@ -96,13 +96,13 @@ paths:
     options:
       operationId: api_event_id_options
       tags: [Events]
-      summary: Possible request methods with events path
-      description: Get possible request methods with events path
+      summary: Possible request methods with /events/{eventId} path
+      description: Get possible request methods with /events/{eventId} path
       parameters:
         - $ref: "#/components/parameters/eventId"
       responses:
-        "200":
-          description: List of all possible request methods in events path
+        "204":
+          description: List of all possible request methods in /events/{eventId} path
           headers:
             Allow:
               $ref: "#/components/headers/Allow"
@@ -199,6 +199,30 @@ components:
       example: >
         eventId,origin,date,message,level,_parent_href_link,_self_href_link
         89776253,"ORDERS","2020-03-08T18:30:55.855Z","Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478","info","/events","/events/89776253"
+    EventRequestBody:
+      title: EventRequestBody
+      type: object
+      properties:
+        origin:
+          type: string
+          example: "ORDERS"
+        date:
+          type: string
+          format: "date-time"
+        message:
+          type: string
+        level:
+          type: string
+          enum:
+            - "info"
+            - "warn"
+            - "error"
+      x-examples:
+        example-1:
+          origin: "ORDERS"
+          date: "2020-03-08T18:30:55.855Z"
+          message: "Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478"
+          level: "info"
     Message:
       type: object
       description: "`HTTP` response presentation"
@@ -336,28 +360,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              origin:
-                type: string
-                example: "ORDERS"
-              date:
-                type: string
-                format: "date-time"
-              message:
-                type: string
-              level:
-                type: string
-                enum:
-                  - "info"
-                  - "warn"
-                  - "error"
-            x-examples:
-              example-1:
-                origin: "ORDERS"
-                date: "2020-03-08T18:30:55.855Z"
-                message: "Order #127 confirmed. Product: #12. Quantity: #2. Company: #32165478"
-                level: "info"
+            $ref: "#/components/schemas/EventRequestBody"
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
