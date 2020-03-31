@@ -84,6 +84,13 @@ paths:
       responses:
         "201":
           description: Successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+          headers:
+            Location:
+              $ref: "#/components/headers/Location"
         "400":
           $ref: "#/components/responses/400"
         "401":
@@ -350,6 +357,13 @@ components:
         All the possible request methods are returned in the header for self-
         discovering robots and for developers too.
       example: "GET,DELETE,HEAD,PATCH,POST,PUT"
+      required: true
+      schema:
+        type: string
+    Location:
+      description: |
+        URI (Uniform Resource Identifier) string to the new created resource.
+      example: /events/89776253
       required: true
       schema:
         type: string
