@@ -44,8 +44,8 @@ paths:
     get:
       operationId: api_event_cget
       tags: [Events]
-      summary: Events list
-      description: Get events list
+      summary: Events list (with query parameters)
+      description: Get events list with query parameters (optional)
       parameters:
         - $ref: "#/components/parameters/origin"
         - $ref: "#/components/parameters/dateFrom"
@@ -124,7 +124,7 @@ paths:
         - $ref: "#/components/parameters/eventId"
       responses:
         "200":
-          description: JSON team information (from ID)
+          description: JSON or CSV team information (from ID)
           content:
             application/json:
               schema:
