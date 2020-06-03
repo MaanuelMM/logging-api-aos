@@ -6,6 +6,8 @@
 
 import json
 
+from io import StringIO
+from csv import DictWriter
 from flask import request
 from responses import make_response, http_message
 from http import HTTPStatus
@@ -67,31 +69,6 @@ class EventHandler():
 
         else:
             return {'match_all': {}}
-
-    @staticmethod
-    def _generate_csv_header(data: dict):
-        new_data = list()
-
-        new_data.append("eventId")
-        new_data.append(EventHandler._join_list(
-            [key for key in data]))
-        new_data.append("_parent_href_link")
-        new_data.append("_self_href_link")
-
-        return EventHandler._join_list(new_data)
-
-    def _generate_csv_body(self, data: dict, event_id: int):  # no headers
-        new_data = list()
-
-        data['date'] = timestamp_to_rfc3339_utcoffset(data['date'])
-
-        new_data.append(event_id)
-        new_data.append(EventHandler._join_list(
-            [value for value in data.values()]))
-        new_data.append(self.prefix)
-        new_data.append(self.prefix + f"/{event_id}")
-
-        return EventHandler._join_list(new_data)
 
     def _generate_dict_body(self, data: dict, event_id: int):
         new_data = dict()
@@ -169,18 +146,26 @@ class EventHandler():
 
         return response
 
+    @staticmethod
+    def _generate_csv(dict_list: list):
+        with StringIO() as csvfile:
+            writer = DictWriter(csvfile, fieldnames=dict_list[0].keys())
+            writer.writeheader()
+            writer.writerows(dict_list)
+            return csvfile.getvalue()
+
     def get_handler(self, event_id: UUID):
         response = None
 
         data = self._get_event_by_id(event_id)
         if data:
+            data = self._generate_dict_body(data, event_id.int)
             if str(request.accept_mimetypes) == 'text/csv':
-                response = make_response(request.headers, HTTPStatus.OK, EventHandler._join_list(
-                    [EventHandler._generate_csv_header(data), self._generate_csv_body(
-                        data, event_id.int)], '\n'), True, 'text/csv')
+                response = make_response(
+                    request.headers, HTTPStatus.OK, EventHandler._generate_csv([data]), True, 'text/csv')
             else:  # default to 'application/json'
-                response = make_response(request.headers, HTTPStatus.OK, json.dumps(
-                    self._generate_dict_body(data, event_id.int)), True)
+                response = make_response(
+                    request.headers, HTTPStatus.OK, json.dumps(data), True)
         elif data is not None:
             response = make_response(request.headers, HTTPStatus.NOT_FOUND, json.dumps(
                 http_message(HTTPStatus.NOT_FOUND)))
@@ -195,21 +180,14 @@ class EventHandler():
 
         data = self._search_events(query)
         if data:
+            data = [self._generate_dict_body(
+                event['_source'], UUID(event['_id']).int) for event in data]
             if str(request.accept_mimetypes) == 'text/csv':
-                # all are the same - in other words, i don't care
-                csv = [EventHandler._generate_csv_header(data[0]['_source'])]
-                for event in data:
-                    csv.append(self._generate_csv_body(
-                        event['_source'], UUID(event['_id']).int))
-                response = make_response(request.headers, HTTPStatus.OK, EventHandler._join_list(
-                    csv, '\n'), True, 'text/csv')
-            else:
-                dict_list = list()
-                for event in data:
-                    dict_list.append(self._generate_dict_body(
-                        event['_source'], UUID(event['_id']).int))
                 response = make_response(
-                    request.headers, HTTPStatus.OK, json.dumps({'events': dict_list}), True)
+                    request.headers, HTTPStatus.OK, EventHandler._generate_csv(data), True, 'text/csv')
+            else:
+                response = make_response(
+                    request.headers, HTTPStatus.OK, json.dumps({'events': data}), True)
         elif data is not None:
             response = make_response(request.headers, HTTPStatus.NOT_FOUND, json.dumps(
                 http_message(HTTPStatus.NOT_FOUND)))
