@@ -30,10 +30,6 @@ class EventHandler():
             raise
 
     @staticmethod
-    def _join_list(data: list, separator: str = ','):
-        return separator.join(map(str, data))
-
-    @staticmethod
     def _order_data(data: dict, schema_order: list):
         new_data = dict()
 
