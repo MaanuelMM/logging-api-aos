@@ -39,13 +39,14 @@ def make_response(incoming_headers: EnvironHeaders, status_code: int = HTTPStatu
         response.set_data(data)
         response.mimetype = mimetype
         # response.headers.add("Content-Length", str(len(response.data)))
+
+        if etag:  # i don't know who it works, so let's do this
+            checkshum = sha256()
+            checkshum.update(response.get_data())
+            response.headers.add("Etag", checkshum.hexdigest())
+
     else:
         response.headers.add("Content-Length", "0")
-
-    if etag:  # i don't know who it works, so let's do this
-        checkshum = sha256()
-        checkshum.update(response.get_data())
-        response.headers.add("Etag", checkshum.hexdigest())
 
     return response
 
